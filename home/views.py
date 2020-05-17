@@ -12,13 +12,14 @@ usernameR=None
 
 # Create your views here.
 # index view
+# Enter client id and client secret to access CodeChef API
 def index(request):
     context = {
         'authorize_url': "https://api.codechef.com/oauth/authorize",
         'token_url': "https://api.codechef.com/oauth/token",
         'callback_uri': "http://127.0.0.1:8000/home/auth/",
-        'client_id': "b529d558182948e92f80fa9d2b42b99d",
-        'client_secret': "fac9653c2e7dd282bbdd3218fd92e085",
+        'client_id': <client_id>,
+        'client_secret': <client_secret> ,
     }
     if access_token:
         return render(request, "home/details.html", {'example': 'example'})
@@ -26,6 +27,7 @@ def index(request):
         return render(request, "home/index.html", context)
 
 # Authentication purpose
+# Enter client id and client secret to access CodeChef API
 def auth(request):
     global access_token, api_call_headers
     if access_token != None:
@@ -35,8 +37,8 @@ def auth(request):
         'content-type': 'application/json',
     }
     Data = {'grant_type': 'authorization_code', 'code': authorization_code,
-            'client_id': "b529d558182948e92f80fa9d2b42b99d",
-            'client_secret': "fac9653c2e7dd282bbdd3218fd92e085", 'redirect_uri': "http://127.0.0.1:8000/home/auth/"}
+            'client_id': <client_id>,
+            'client_secret': <client_secret>, 'redirect_uri': "http://127.0.0.1:8000/home/auth/"}
     access_token_response = requests.post("https://api.codechef.com/oauth/token", data=json.dumps(Data),
                                           headers=headers)
     tokens = json.loads(access_token_response.text)
